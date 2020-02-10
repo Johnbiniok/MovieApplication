@@ -35,7 +35,7 @@ namespace MovieApplication
                                     // convert string to array
                                     string[] arr = theLine.Split(',');
                                     // display array data
-                                    Console.WriteLine($"{arr[0],-10}  {arr[1],0}                                          {arr[2],0}");
+                                    Console.WriteLine($"{arr[0],-10}    {arr[1],-60}    {arr[2],0}");
 
                                 }
 
