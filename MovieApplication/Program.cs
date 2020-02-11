@@ -3,7 +3,7 @@ using System.IO;
 
 namespace MovieApplication
 {
-    class Program
+    static class Program
     {
         private static String file = @"movies.csv";
 
@@ -81,8 +81,14 @@ namespace MovieApplication
                     // convert string to array
                     String[] arr = theLine.Split(',');
                     // display array data
-                    Console.WriteLine($"{arr[0],-10}    {arr[1],-60}    {arr[2],0}");
-
+                    try
+                    {
+                        Console.WriteLine($"{arr[0],-10}    {arr[1],-60}    {arr[2],0}");
+                    }
+                    catch(IndexOutOfRangeException)
+                    {
+                        Console.WriteLine("Internal error");
+                    }
                 }
 
             }
@@ -116,8 +122,9 @@ namespace MovieApplication
                         }
 
                     }
-                    catch(IndexOutOfRangeException i)
+                    catch(IndexOutOfRangeException)
                     {
+                        Console.WriteLine("Internal Error");
                     }
 
                 }
