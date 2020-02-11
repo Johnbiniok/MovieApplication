@@ -5,14 +5,13 @@ namespace MovieApplication
 {
     class Program
     {
+        private static String file = @"movies.csv";
+
         static void Main(string[] args)
         {
 
-            string file = @"movies.csv";
+        //string file = @"movies.csv";
                 String userOption1;
-                int movieID = 0;
-                String title = "";
-                String genres = "";
 
                 do
                 {
@@ -25,107 +24,109 @@ namespace MovieApplication
                     {
                         //read all movie info
                         case "1":
-                            if (File.Exists(file))
-                            {
-                                // read data from file
-                                StreamReader sr = new StreamReader(file);
-                                while (!sr.EndOfStream)
-                                {
-                                    String theLine = sr.ReadLine();
-                                    // convert string to array
-                                    String[] arr = theLine.Split(',');
-                                    // display array data
-                                    Console.WriteLine($"{arr[0],-10}    {arr[1],-60}    {arr[2],0}");
-
-                                }
-
-                            }
-                            else
-                            {
-                                Console.WriteLine("File does not exist");
-                            }
+                            readFromFile();
                             break;
                         //add a movie to the file
                         case "2":
-                            Console.WriteLine("Enter the Movie ID: ");
-                            movieID = Console.Read();
-                            Console.ReadLine();
-                            Console.WriteLine("Enter the movie title: ");
-                            title = Console.ReadLine();
-                            Console.WriteLine("Enter the genres");
-                            genres = Console.ReadLine();
-                            using (FileStream fs = new FileStream(file, FileMode.Append, FileAccess.Write))
-                            {
-                                using TextWriter tw = new StreamWriter(fs);
-
-                                tw.WriteLine("{0},{1},{2}", movieID, title, genres);
-
-                            }
-                            Console.WriteLine("Successfully added to file.");
-
+                            writeToFile();
                             break;
                         //select a genre
                         case "3":
+                            Console.WriteLine("What genre do you want to search for? ");
+                            string userGenre = Console.ReadLine();
+                            forGenre(userGenre);
                             break;
+                        //quit
                         case "4":
-                            break;
+                            Console.WriteLine("GoodBye! ");
+                            continue;
                     }
-                    /*String[] userFull = new string[7];
-                    if (userStart.Equals("Y") || userStart.Equals("y"))
+
+                } while (userOption1 != "4");
+
+        }
+
+        static void writeToFile()
+        {
+            int movieID = 0;
+            String title = "";
+            String genres = "";
+            Console.WriteLine("Enter the Movie ID: ");
+            movieID = Console.Read();
+            Console.ReadLine();
+            Console.WriteLine("Enter the movie title: ");
+            title = Console.ReadLine();
+            Console.WriteLine("Enter the genres");
+            genres = Console.ReadLine();
+            using (FileStream fs = new FileStream(file, FileMode.Append, FileAccess.Write))
+            {
+                using TextWriter tw = new StreamWriter(fs);
+
+                tw.WriteLine("{0},{1},{2}", movieID, title, genres);
+
+            }
+            Console.WriteLine("Successfully added to file.");
+
+        }
+
+        static void readFromFile()
+        {
+            if (File.Exists(file))
+            {
+                // read data from file
+                StreamReader sr = new StreamReader(file);
+                while (!sr.EndOfStream)
+                {
+                    String theLine = sr.ReadLine();
+                    // convert string to array
+                    String[] arr = theLine.Split(',');
+                    // display array data
+                    Console.WriteLine($"{arr[0],-10}    {arr[1],-60}    {arr[2],0}");
+
+                }
+
+            }
+            else
+            {
+                Console.WriteLine("File does not exist");
+            }
+        }
+
+        static void forGenre(string genre)
+        {
+            if (File.Exists(file))
+            {
+                // read data from file
+                StreamReader sr = new StreamReader(file);
+                while (!sr.EndOfStream)
+                {
+                    string theLine = sr.ReadLine();
+                    // convert string to array
+                    string[] data = theLine.Split(',');
+                    // display array data
+                    try
                     {
-
-                        Console.Write("Enter ticket ID: ");
-                        ticketID = Console.Read();
-                        Console.ReadLine();
-                        Console.Write("Enter a summary: ");
-                        summary = Console.ReadLine();
-                        Console.Write("Enter a status: ");
-                        status = Console.ReadLine();
-                        Console.Write("Enter priority: ");
-                        priority = Console.ReadLine();
-                        Console.Write("Enter submitter name: ");
-                        submitter = Console.ReadLine();
-
-                        Console.Write("Names of assigned: ");
-                        assigned = Console.ReadLine();
-
-                        Console.Write("Name of watching: ");
-                        watching = Console.ReadLine();
-
-
-                        using (FileStream fs = new FileStream(file, FileMode.Append, FileAccess.Write))
+                        if (data[2].Contains(genre))
                         {
-                            using TextWriter tw = new StreamWriter(fs);
-
-                            tw.WriteLine("{0},{1},{2},{3},{4},{5},{6}", ticketID, summary, status, priority, submitter,
-                                assigned, watching);
+                            Console.WriteLine($"{data[0],-10}    {data[1],-60}    {data[2],0}");
+                        }
+                        else
+                        {
 
                         }
-                    }*/
 
-                }while (userOption1 == "1" || userOption1 == "2" || userOption1 == "3");
-                /*if (File.Exists(file))
-                {
-                    // read data from file
-                    StreamReader sr = new StreamReader(file);
-                    while (!sr.EndOfStream)
+                    }
+                    catch(IndexOutOfRangeException i)
                     {
-                        string line = sr.ReadLine();
-                        // convert string to array
-                        string[] arr = line.Split(',');
-                        // display array data
-                        Console.WriteLine(String.Format("{0,-10} | {1,-10} | {2,5}", arr[0], arr[1], arr[2]));
-
                     }
 
                 }
-                else
-                {
-                    Console.WriteLine("File does not exist");
-                }*/
 
-
-
+            }
+            else
+            {
+                Console.WriteLine("File does not exist");
+            }
         }
 
 
