@@ -61,7 +61,7 @@ namespace MovieApplication
                                 tw.WriteLine("{0},{1},{2}", movieID, title, genres);
 
                             }
-                            Console.WriteLine("Successfully added it.");
+                            Console.WriteLine("Successfully added to file.");
 
                             break;
                         //select a genre
