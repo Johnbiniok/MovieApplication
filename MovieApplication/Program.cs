@@ -9,7 +9,7 @@ namespace MovieApplication
         {
 
             string file = @"movies.csv";
-                string userOption1;
+                String userOption1;
                 int movieID = 0;
                 String title = "";
                 String genres = "";
@@ -31,9 +31,9 @@ namespace MovieApplication
                                 StreamReader sr = new StreamReader(file);
                                 while (!sr.EndOfStream)
                                 {
-                                    string theLine = sr.ReadLine();
+                                    String theLine = sr.ReadLine();
                                     // convert string to array
-                                    string[] arr = theLine.Split(',');
+                                    String[] arr = theLine.Split(',');
                                     // display array data
                                     Console.WriteLine($"{arr[0],-10}    {arr[1],-60}    {arr[2],0}");
 
@@ -54,14 +54,14 @@ namespace MovieApplication
                             title = Console.ReadLine();
                             Console.WriteLine("Enter the genres");
                             genres = Console.ReadLine();
-                            Console.WriteLine("Movie ID        title        genres");
                             using (FileStream fs = new FileStream(file, FileMode.Append, FileAccess.Write))
                             {
                                 using TextWriter tw = new StreamWriter(fs);
 
-                                tw.WriteLine("{0}        {1}        {2}", movieID, title, genres);
+                                tw.WriteLine("{0},{1},{2}", movieID, title, genres);
 
                             }
+                            Console.WriteLine("Successfully added it.");
 
                             break;
                         //select a genre
@@ -104,7 +104,7 @@ namespace MovieApplication
                     }*/
 
                 }while (userOption1 == "1" || userOption1 == "2" || userOption1 == "3");
-                if (File.Exists(file))
+                /*if (File.Exists(file))
                 {
                     // read data from file
                     StreamReader sr = new StreamReader(file);
@@ -122,7 +122,7 @@ namespace MovieApplication
                 else
                 {
                     Console.WriteLine("File does not exist");
-                }
+                }*/
 
 
 
